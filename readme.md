@@ -1,6 +1,4 @@
-Certainly! Here is an updated `README.md` file without the actual environment information:
 
-```markdown
 # Basic Setup
 
 This project is a basic server setup using Node.js, Express, TypeScript, and Mongoose. It provides a starting point for developing a server-side application with a structured and maintainable codebase.
