@@ -1,0 +1,26 @@
+import z from 'zod';
+
+// Define the Zod schema for the product
+const ProductSchema = z.object({
+  name: z.string().nonempty('Name is required'),
+  description: z.string().nonempty('Description is required'),
+  price: z.number().min(0, 'Price must be a positive number'),
+  category: z.string().nonempty('Category is required'),
+  tags: z.array(z.string().nonempty('At least one tag is required')),
+  variants: z.array(
+    z
+      .object({
+        type: z.string().nonempty('Variant type is required'),
+        value: z.string().nonempty('Variant value is required'),
+      })
+     
+  ),
+  inventory: z.object({
+    quantity: z.number().min(0, 'Quantity must be a non-negative number'),
+    inStock: z.boolean(),
+  }),
+  isDeleted: z.boolean().default(false),
+});
+
+
+export default ProductSchema;
