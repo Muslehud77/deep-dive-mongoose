@@ -1,4 +1,21 @@
-import express from 'express'
-const router = express.Router()
+import { TProduct } from "./product.interface";
+import { productModel } from "./product.model";
 
-router.get('/add-product')
+const addProductIntoDB = async (product:TProduct)=>{
+
+    const result = await productModel.create(product)
+
+    return result
+
+
+}
+
+
+const getAllProductsFromDB =  async ()=>{
+
+    const result = await productModel.find()
+
+    return result
+}
+
+export default { addProductIntoDB, getAllProductsFromDB };

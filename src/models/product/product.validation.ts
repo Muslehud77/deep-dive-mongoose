@@ -1,20 +1,23 @@
 import z from 'zod';
 
 // Define the Zod schema for the product
-const ProductSchema = z.object({
+
+
+const variant = z.object({
+    type:z.string(),
+    value:z.string()
+})
+
+
+const productValidation = z.object({
   name: z.string().nonempty('Name is required'),
   description: z.string().nonempty('Description is required'),
   price: z.number().min(0, 'Price must be a positive number'),
   category: z.string().nonempty('Category is required'),
   tags: z.array(z.string().nonempty('At least one tag is required')),
-  variants: z.array(
-    z
-      .object({
-        type: z.string().nonempty('Variant type is required'),
-        value: z.string().nonempty('Variant value is required'),
-      })
-     
-  ),
+  variants: z
+    .array(variant)
+    .nonempty({ message: 'At least one variant is required' }),
   inventory: z.object({
     quantity: z.number().min(0, 'Quantity must be a non-negative number'),
     inStock: z.boolean(),
@@ -23,4 +26,4 @@ const ProductSchema = z.object({
 });
 
 
-export default ProductSchema;
+export default productValidation;
