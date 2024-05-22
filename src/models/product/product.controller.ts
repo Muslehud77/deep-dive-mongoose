@@ -4,13 +4,26 @@ import productValidation from './product.validation';
 
 const getAllProducts = async function (req: Request, res: Response) {
   try {
-    const result = await services.getAllProductsFromDB();
 
-    res.status(200).json({
-      success: true,
-      message: 'Products fetched successfully!',
-      data: result,
-    });
+    const searchTerm = req.query.searchTerm
+
+    if (searchTerm) {
+      res.status(200).json({
+        success: true,
+        message: `Products matching search term ${searchTerm} fetched successfully!`,
+        data: searchTerm,
+      });
+    }else{
+        const result = await services.getAllProductsFromDB();
+
+        res.status(200).json({
+          success: true,
+          message: 'Products fetched successfully!',
+          data: result,
+        });
+    }
+     
+    
   } catch (err) {
     res.status(500).json({
       success: false,
@@ -50,6 +63,7 @@ const getProductById = async function (req: Request, res: Response) {
 
 const addProduct = async function (req: Request, res: Response) {
   try {
+    
     const product = await productValidation.parseAsync(req.body);
     // const product = req.body
 
@@ -72,15 +86,18 @@ const addProduct = async function (req: Request, res: Response) {
 
 const updateProduct = async function (req: Request, res: Response) {
   try {
+     const productId = { _id: req.params.productId };
     const product = await productValidation.parseAsync(req.body);
     // const product = req.body
 
-    const result = await services.addProductIntoDB(product);
+   await services.updateProductInDB(productId,product);
+   const updatedProduct = await services.getProductByIdFromDB(productId)
+
 
     res.status(200).json({
       success: true,
-      message: 'Product created successfully!',
-      data: result,
+      message: 'Product updated successfully!',
+      data: updatedProduct,
     });
   } catch (err) {
     res.status(500).json({
@@ -93,4 +110,11 @@ const updateProduct = async function (req: Request, res: Response) {
 
 
 
-export default { addProduct, getAllProducts, getProductById };
+
+
+export default {
+  addProduct,
+  getAllProducts,
+  getProductById,
+  updateProduct,
+};

@@ -6,8 +6,8 @@ const addProductIntoDB = async (product: TProduct) => {
 
   return result;
 };
-const updateProductInDB = async (product: TProduct) => {
-  const result = await productModel.create(product);
+const updateProductInDB = async (id:{_id:string},product: TProduct) => {
+  const result = await productModel.updateOne(id,product);
 
   return result;
 };
@@ -22,6 +22,11 @@ const getProductByIdFromDB = async (id: { _id: string }) => {
   const result = await productModel.findOne(id);
   return result;
 };
+
+const getSearchedProductFromDB = async (searchTerm:string){
+    const result = await productModel.find({description:{$regex:searchTerm}})
+}
+
 
 export default {
   addProductIntoDB,
