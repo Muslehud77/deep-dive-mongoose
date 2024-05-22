@@ -1,4 +1,4 @@
-import z  from 'zod';
+import z from 'zod';
 
 const orderValidation = z.object({
   email: z
@@ -12,7 +12,7 @@ const orderValidation = z.object({
     .refine(val => val > 0, { message: 'Price must be greater than 0' }),
   quantity: z
     .number()
-    .min(0, { message: 'Quantity must be at least 0' })
+    .min(1, { message: 'Quantity must be at least 1' })
     .refine(val => Number.isInteger(val), {
       message: 'Quantity must be an integer',
     }),

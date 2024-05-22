@@ -1,8 +1,8 @@
 type TOrder = {
-    email:string,
-    productId:string,
-    price:number,
-    quantity:number
-}
+  email: string;
+  productId: string;
+  price: number;
+  quantity: number;
+};
 
-export default TOrder
+export default TOrder;

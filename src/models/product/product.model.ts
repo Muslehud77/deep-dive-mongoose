@@ -17,7 +17,7 @@ const productSchema = new Schema<TProduct>({
     type: [variantSchema],
     required: true,
   },
-  inventory: [{ quantity: Number, inStock: Boolean }],
+  inventory: { quantity: Number, inStock: Boolean },
   isDeleted: { type: Boolean, default: false },
 });
 
