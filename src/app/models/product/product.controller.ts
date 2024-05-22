@@ -4,25 +4,18 @@ import productValidation from './product.validation';
 
 const getAllProducts = async function (req: Request, res: Response) {
   try {
-    const searchTerm = req.query.searchTerm as unknown as string;
+     const searchTerm = req.query.searchTerm as string;
+     const result = searchTerm
+       ? await services.getSearchedProductFromDB(searchTerm)
+       : await services.getAllProductsFromDB();
 
-    if (searchTerm) {
-      const result = await services.getSearchedProductFromDB(searchTerm);
-
-      res.status(200).json({
-        success: true,
-        message: `Products matching search term ${searchTerm} fetched successfully!`,
-        data: result,
-      });
-    } else {
-      const result = await services.getAllProductsFromDB();
-
-      res.status(200).json({
-        success: true,
-        message: 'Products fetched successfully!',
-        data: result,
-      });
-    }
+     res.status(200).json({
+       success: true,
+       message: searchTerm
+         ? `Products matching search term '${searchTerm}' fetched successfully!`
+         : 'Products fetched successfully!',
+       data: result,
+     });
   } catch (err) {
     res.status(500).json({
       success: false,

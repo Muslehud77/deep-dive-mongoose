@@ -1,5 +1,5 @@
 import app from './app';
-import config from './configs';
+import config from './app/configs';
 import { connect } from 'mongoose';
 
 async function run() {

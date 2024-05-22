@@ -1,4 +1,4 @@
-import { Schema, model, connect } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { TProduct } from './product.interface';
 
 const isRequiredString = { type: String, required: true };
