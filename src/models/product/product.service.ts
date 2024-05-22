@@ -23,8 +23,13 @@ const getProductByIdFromDB = async (id: { _id: string }) => {
   return result;
 };
 
-const getSearchedProductFromDB = async (searchTerm:string){
-    const result = await productModel.find({description:{$regex:searchTerm}})
+const getSearchedProductFromDB = async (searchTerm:string)=>{
+    const result = await productModel.find({
+     $or : [ {name: { $regex: searchTerm, $options: 'i' }},
+      {description: { $regex: searchTerm, $options: 'i' }},
+      {category: { $regex: searchTerm, $options: 'i' }}]
+    });
+    return result
 }
 
 
@@ -33,4 +38,5 @@ export default {
   getAllProductsFromDB,
   getProductByIdFromDB,
   updateProductInDB,
+  getSearchedProductFromDB,
 };

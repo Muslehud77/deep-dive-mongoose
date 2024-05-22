@@ -4,26 +4,25 @@ import productValidation from './product.validation';
 
 const getAllProducts = async function (req: Request, res: Response) {
   try {
-
-    const searchTerm = req.query.searchTerm
+    const searchTerm = req.query.searchTerm as unknown as string;
 
     if (searchTerm) {
+      const result = await services.getSearchedProductFromDB(searchTerm);
+
       res.status(200).json({
         success: true,
         message: `Products matching search term ${searchTerm} fetched successfully!`,
-        data: searchTerm,
+        data: result,
       });
-    }else{
-        const result = await services.getAllProductsFromDB();
+    } else {
+      const result = await services.getAllProductsFromDB();
 
-        res.status(200).json({
-          success: true,
-          message: 'Products fetched successfully!',
-          data: result,
-        });
+      res.status(200).json({
+        success: true,
+        message: 'Products fetched successfully!',
+        data: result,
+      });
     }
-     
-    
   } catch (err) {
     res.status(500).json({
       success: false,
@@ -63,7 +62,6 @@ const getProductById = async function (req: Request, res: Response) {
 
 const addProduct = async function (req: Request, res: Response) {
   try {
-    
     const product = await productValidation.parseAsync(req.body);
     // const product = req.body
 
@@ -83,16 +81,14 @@ const addProduct = async function (req: Request, res: Response) {
   }
 };
 
-
 const updateProduct = async function (req: Request, res: Response) {
   try {
-     const productId = { _id: req.params.productId };
+    const productId = { _id: req.params.productId };
     const product = await productValidation.parseAsync(req.body);
     // const product = req.body
 
-   await services.updateProductInDB(productId,product);
-   const updatedProduct = await services.getProductByIdFromDB(productId)
-
+    await services.updateProductInDB(productId, product);
+    const updatedProduct = await services.getProductByIdFromDB(productId);
 
     res.status(200).json({
       success: true,
@@ -107,10 +103,6 @@ const updateProduct = async function (req: Request, res: Response) {
     });
   }
 };
-
-
-
-
 
 export default {
   addProduct,
