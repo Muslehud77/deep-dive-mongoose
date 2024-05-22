@@ -1,6 +1,6 @@
 import z  from 'zod';
 
-const orderValidationSchema = z.object({
+const orderValidation = z.object({
   email: z
     .string()
     .email({ message: 'Invalid email format' })
@@ -18,4 +18,4 @@ const orderValidationSchema = z.object({
     }),
 });
 
-export default orderValidationSchema;
+export default orderValidation;
