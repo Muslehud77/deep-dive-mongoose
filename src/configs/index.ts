@@ -1,10 +1,8 @@
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
-const port = process.env.PORT
-const dbUri  = process.env.DB_URI as string
-
-
+const port = process.env.PORT;
+const dbUri = process.env.DB_URI as string;
 
 export default { port, dbUri };

@@ -3,9 +3,9 @@ import { TProduct } from './product.interface';
 
 const isRequiredString = { type: String, required: true };
 const variantSchema = new Schema({
-type: isRequiredString,
-value:isRequiredString
-})
+  type: isRequiredString,
+  value: isRequiredString,
+});
 
 const productSchema = new Schema<TProduct>({
   name: { ...isRequiredString, unique: true },
@@ -21,4 +21,15 @@ const productSchema = new Schema<TProduct>({
   isDeleted: { type: Boolean, default: false },
 });
 
-export const productModel = model<TProduct>('products',productSchema)
+productSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+
+  next();
+});
+productSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+
+  next();
+});
+
+export const productModel = model<TProduct>('products', productSchema);

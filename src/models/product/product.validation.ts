@@ -2,12 +2,10 @@ import z from 'zod';
 
 // Define the Zod schema for the product
 
-
 const variant = z.object({
-    type:z.string(),
-    value:z.string()
-})
-
+  type: z.string(),
+  value: z.string(),
+});
 
 const productValidation = z.object({
   name: z.string().nonempty('Name is required'),
@@ -24,6 +22,5 @@ const productValidation = z.object({
   }),
   isDeleted: z.boolean().default(false),
 });
-
 
 export default productValidation;
