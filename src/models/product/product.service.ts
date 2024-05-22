@@ -32,6 +32,12 @@ const getSearchedProductFromDB = async (searchTerm:string)=>{
     return result
 }
 
+const deleteProductFromDB = async (id:{_id:string})=>{
+    const result = await productModel.findByIdAndUpdate(id,{isDeleted:true})
+
+    return result
+}
+
 
 export default {
   addProductIntoDB,
@@ -39,4 +45,5 @@ export default {
   getProductByIdFromDB,
   updateProductInDB,
   getSearchedProductFromDB,
+  deleteProductFromDB,
 };

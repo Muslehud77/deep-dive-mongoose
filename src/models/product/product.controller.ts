@@ -44,13 +44,14 @@ const getProductById = async function (req: Request, res: Response) {
         message: 'Could not found or deleted',
         data: result,
       });
+    }else{
+        res.status(200).json({
+          success: true,
+          message: 'Product fetched successfully!',
+          data: result,
+        });
     }
 
-    res.status(200).json({
-      success: true,
-      message: 'Product fetched successfully!',
-      data: result,
-    });
   } catch (err) {
     res.status(500).json({
       success: false,
@@ -85,15 +86,39 @@ const updateProduct = async function (req: Request, res: Response) {
   try {
     const productId = { _id: req.params.productId };
     const product = await productValidation.parseAsync(req.body);
+   
+
+
     // const product = req.body
 
     await services.updateProductInDB(productId, product);
     const updatedProduct = await services.getProductByIdFromDB(productId);
-
+    
     res.status(200).json({
       success: true,
       message: 'Product updated successfully!',
       data: updatedProduct,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: 'Request Could Not Complete',
+      data: err,
+    });
+  }
+};
+
+const deleteProduct = async function (req: Request, res: Response) {
+  try {
+    const productId = { _id: req.params.productId };
+   
+   await services.deleteProductFromDB(productId);
+   
+
+    res.status(200).json({
+      success: true,
+      message: 'Product deleted successfully!',
+      data: null,
     });
   } catch (err) {
     res.status(500).json({
@@ -109,4 +134,5 @@ export default {
   getAllProducts,
   getProductById,
   updateProduct,
+  deleteProduct,
 };
