@@ -15,7 +15,6 @@ This project is a basic server setup using Node.js, Express, TypeScript, and Mon
 - [Creating a Product](#creating-a-product)
 - [Listing and Searching Products](#listing-and-searching-products)
 - [Retrieve a Specific Product by ID](#retrieve-a-specific-product-by-id)
-- [Retrieve a Specific Product by ID](#retrieve-a-specific-product-by-id)
 - [Listing and Searching Products](#listing-and-searching-products)
 - [Delete a Product](#delete-a-product)
 - [Create a New Order](#create-a-new-order)
